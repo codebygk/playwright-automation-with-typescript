@@ -1,0 +1,38 @@
+{
+  "name": "playwright-automation-with-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:webkit": "npx playwright test --project=webkit",
+    "test:headed": "npx playwright test --headed",
+    "test:headed:chromium": "npx playwright test --headed --project=chromium",
+    "test:headed:firefox": "npx playwright test --headed --project=firefox",
+    "test:headed:webkit": "npx playwright test --headed --project=webkit",
+    "test:smoke": "npx playwright test --grep @smoke",
+    "test:debug": "npx playwright test --debug",
+    "test:local": "BASE_URL=http://localhost:4200 npx playwright test",
+    "test:report": "npx playwright show-report",
+    "codegen": "npx playwright codegen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codebygk/playwright-automation-with-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/codebygk/playwright-automation-with-typescript/issues"
+  },
+  "homepage": "https://github.com/codebygk/playwright-automation-with-typescript#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.4.1"
+  }
+}
