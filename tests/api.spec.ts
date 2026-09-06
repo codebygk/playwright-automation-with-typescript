@@ -34,4 +34,6 @@ test('POST /users/login', async ({ request, context }) => {
         expect(response.status()).toBe(200);
         const responseBody = await response.json();
         expect(responseBody.id).toBe(productId);
+
+        expect(responseBody.name).toBeNumber();
     });

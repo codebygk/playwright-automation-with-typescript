@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, expect } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -93,4 +93,22 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+});
+
+
+expect.extend({
+  toBeNumber(received) {
+    const pass = typeof received === 'number';
+    if (pass) {
+      return {
+        message: () => `expected ${received} not to be a number`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () => `expected ${received} to be a number, but received type ${typeof received}`,
+        pass: false,
+      };
+    }
+  },
 });

@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../../pages/login';
+import { LoginPage } from '../../lib/pages/login-page';
+import { registerUser } from '../../lib/datafactory/register';
 
 test('Login test without pageobject', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
@@ -28,4 +29,14 @@ test('Login test with pageobject', async ({ page }) => {
     await loginPage.loginButton.click();
     // await loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
     await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
+});
+
+test('Login with newly registered user', async ({ page }) => {
+    const email = `test${Date.now()}@practicesoftwaretesting.com`;
+    const password = 'krishnaPV@1';
+    await registerUser(email, password);
+    const loginPage = new LoginPage(page);
+    await loginPage.navigate();
+    await loginPage.login(email, password);
+    await expect(page.getByTestId('nav-menu')).toContainText('TestUser One');
 });

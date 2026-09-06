@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { getRandomState } from '../../lib/helpers/states';
 
 test.describe('End to End Flow', () => {
     test.use({ storageState: '.auth/customer01.json' });
@@ -17,6 +18,7 @@ test.describe('End to End Flow', () => {
         await page.getByTestId('proceed-1').click();
         await page.getByTestId('proceed-2').click();
         await page.getByTestId('country').selectOption('IN');
+        await page.getByTestId('state').fill(getRandomState()); 
         await page.getByTestId('postal_code').fill('638156');
         await page.getByTestId('house_number').fill('123');
         await page.getByTestId('proceed-3').click();
