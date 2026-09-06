@@ -33,6 +33,7 @@
   "homepage": "https://github.com/codebygk/playwright-automation-with-typescript#readme",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
-    "@types/node": "^26.4.1"
+    "@types/node": "^26.4.1",
+    "dotenv": "^17.4.2"
   }
 }
