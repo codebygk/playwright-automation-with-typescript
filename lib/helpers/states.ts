@@ -1,4 +1,4 @@
-import { getRandomValueFromArray } from "./array";
+import { getRandomValueFromArray } from "@helpers/array";
 
 export const STATES = [
     "Alabama",

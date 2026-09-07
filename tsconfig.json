@@ -1,5 +1,12 @@
 {
     "compilerOptions": {
-        "types": [ "node" ]
-    }   
+        "types": [ "node" ],
+        "paths": {
+            "@datafactory/*": ["./lib/datafactory/*"],
+            "@helpers/*": ["./lib/helpers/*"],
+            "@pages/*": ["./lib/pages/*"],
+            "@fixtures/*": ["./lib/fixtures/*"],
+            "@tests/*": ["./tests/*"]
+        }
+    }
 }

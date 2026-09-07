@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getRandomState } from '../../lib/helpers/states';
+import { getRandomState } from '@helpers/states';
 
 test.describe('End to End Flow', () => {
     test.use({ storageState: '.auth/customer01.json' });
