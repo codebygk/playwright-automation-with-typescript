@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '@pages/login-page';
+import { LoginPage } from '@pages/login.page';
 import { registerUser } from '@datafactory/register';
+import { test, expect } from '@fixtures/base.fixture'
 
 test('Login test without pageobject', async ({ page }) => {
     await page.goto('https://practicesoftwaretesting.com/');
@@ -17,7 +17,7 @@ test('Login test without pageobject', async ({ page }) => {
 
     await expect(page.locator('[data-test="nav-menu"]')).toContainText('Jane Doe');
     await expect(page.locator('[data-test="page-title"]')).toContainText('Profile');
-        //  Using getByTestId to click on the update profile button. testIdAttribute defined in playwright.config.ts.
+    //  Using getByTestId to click on the update profile button. testIdAttribute defined in playwright.config.ts.
     await page.getByTestId('update-profile-submit').click();
 });
 
@@ -39,4 +39,14 @@ test('Login with newly registered user', async ({ page }) => {
     await loginPage.navigate();
     await loginPage.login(email, password);
     await expect(page.getByTestId('nav-menu')).toContainText('TestUser One');
+});
+
+test('Login with fixture', async ({ loginPage, accountPage, pageConsole }) => {
+    const email = `test${Date.now()}@practicesoftwaretesting.com`;
+    const password = 'krishnaPV@1';
+    await registerUser(email, password);
+    await loginPage.navigate();
+    await loginPage.login(email, password);
+    await expect(accountPage.navMenu).toContainText('TestUser One');
+    await expect(accountPage.pageTitle).toContainText('My account');
 });
