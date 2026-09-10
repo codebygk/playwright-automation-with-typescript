@@ -29,7 +29,10 @@ test.describe('Home page with no authentication', () => {
         expect(await productGrid.getByRole('link').count()).toBe(9);
     });
 
-    test('Check Search Results', async ({ page }) => {
+    test('Check Search Results', async ({ page, isMobile }) => {
+        if (isMobile) {
+            await page.getByRole('button', {name: 'Filters'}).click();
+        }
         await page.getByTestId('search-query').fill('Thor Hammer');
         await page.getByTestId('search-submit').click();
         const searchResults = page.getByTestId('search_completed');
@@ -41,6 +44,31 @@ test.describe('Home page with no authentication', () => {
         await page.waitForLoadState('load');
         await expect(page).toHaveScreenshot('Home-page-with-no-authentication.png',
             { mask: [page.getByTitle('Practice Software Testing - Toolshop'), page.locator('.testing-notification-bar')], maskColor: '#FF0000' });
+    });
+
+    test('Check for inputs with labels', async({page}) => {
+        // await page.goto('https://with-bugs.practicesoftwaretesting.com')
+        const inputsWithoutLabels = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('input'))
+            .filter((input) => !document.querySelector(`label[for="${input.id}"]`))
+            .map((input) => input.outerHTML);
+        });
+        expect(inputsWithoutLabels.length,
+            `Labels with issues: ${inputsWithoutLabels.toString()}`
+        ).toBe(0);
+    });
+
+
+    test('Check for broken images', async({page}) => {
+        await page.goto('https://with-bugs.practicesoftwaretesting.com')
+        const brokenImages = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('img'))
+            .filter((img) => img.naturalWidth === 0 || img.naturalHeight === 0)
+            .map((img) => img.src);
+        });
+        expect(brokenImages.length,
+            `Broken images: ${brokenImages.toString()}`
+        ).toBe(0);
     });
 
 });
@@ -111,11 +139,10 @@ test.describe('Home page with authentication', () => {
 
     test('Mocked products', async ({ page }) => {
         await test.step('Mock /products', async () => {
-            await page.routeFromHAR('.hars/product.har',{   
-                url: `${process.env.API_BASE_URL}/products**`, 
+            await page.routeFromHAR('.hars/product.har', {
+                url: `${process.env.API_BASE_URL}/products**`,
                 update: false
-            }
-            )
+            })
         });
         await page.goto('/');
         await expect(page.locator('.skeleton').first()).not.toBeVisible();

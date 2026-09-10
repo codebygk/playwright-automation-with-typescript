@@ -35,5 +35,5 @@ test('POST /users/login', async ({ request, context }) => {
         const responseBody = await response.json();
         expect(responseBody.id).toBe(productId);
 
-        expect(responseBody.name).toBeNumber();
+        expect(responseBody.price).toBeNumber();
     });

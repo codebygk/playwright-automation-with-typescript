@@ -34,6 +34,7 @@ test.describe('End to End Flow', () => {
         await page.getByTestId('search-submit').click();
         await page.getByTestId('search_completed').getByRole('heading', { name: 'Thor Hammer' }).click();
         await page.getByRole('heading', { name: 'Thor Hammer' }).click();
+        await page.waitForLoadState('load');
         await expect(page).toHaveScreenshot('product-page.png', { mask: [page.getByRole('img')], fullPage: true });
     })
 

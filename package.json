@@ -17,7 +17,9 @@
     "test:debug": "npx playwright test --debug",
     "test:local": "BASE_URL=http://localhost:4200 npx playwright test",
     "test:report": "npx playwright show-report",
-    "codegen": "npx playwright codegen"
+    "codegen": "npx playwright codegen",
+    "install:bagel-shop": "cd bagel-shop && npm install",
+    "start": "cd bagel-shop && npm start"
   },
   "repository": {
     "type": "git",

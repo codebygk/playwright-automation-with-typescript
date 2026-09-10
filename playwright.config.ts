@@ -12,10 +12,21 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  // Run your local dev server before starting the tests
+  webServer: {
+    command: 'npm run start',
+    url: 'http://localhost:5173',
+    reuseExistingServer: !process.env.CI,
+    stdout: 'ignore',
+    stderr: 'pipe',
+  },
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 5 * 1000,
   /* Maximum time all tests can run for. */
   globalTimeout: 10 * 60 * 1000,
+
+
+
   /* Directory where the tests are located. */
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -36,11 +47,14 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    actionTimeout: 0,
     ignoreHTTPSErrors: true,
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
     headless: true,
+    actionTimeout: 5 * 60 * 1000,
+    navigationTimeout: 10 * 60 * 1000,
+
+
   },
 
   /* Configure projects for major browsers */
@@ -48,10 +62,13 @@ export default defineConfig({
     {
       name: 'setup',
       testMatch: /.*\.setup\.ts/,
-    },  
+    },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], permissions: ['clipboard-read'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        permissions: ['clipboard-read', 'geolocation']
+      },
       dependencies: ['setup'],
     },
     // {
